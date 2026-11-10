@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="MultiCalculator - Calculadora científica, operaciones con matrices e historial">
+  <meta name="theme-color" content="#eef2f4" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0f1a1f" media="(prefers-color-scheme: dark)">
+  <title>MultiCalculator | Ignacio Herrera Reyes</title>
+  <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <main class="layout">
+
+    <!-- ================= CALCULADORA ================= -->
+    <section class="card" aria-labelledby="calc-title">
+      <h1 id="calc-title">MultiCalculator</h1>
+
+      <output id="display" class="display">0</output>
+
+      <div class="keys" id="keys">
+        <button type="button" data-action="clear" aria-label="Borrar todo">C</button>
+        <button type="button" data-action="back" aria-label="Borrar último carácter">⌫</button>
+        <button type="button" data-value="(">(</button>
+        <button type="button" data-value=")">)</button>
+
+        <button type="button" data-value="sqrt(" aria-label="Raíz cuadrada">√</button>
+        <button type="button" class="op" data-value="**" aria-label="Elevar a una potencia">xʸ</button>
+        <button type="button" class="op" data-value="%" aria-label="Porcentaje">%</button>
+        <button type="button" class="op" data-value="/" aria-label="Dividir">÷</button>
+
+        <button type="button" data-value="7">7</button>
+        <button type="button" data-value="8">8</button>
+        <button type="button" data-value="9">9</button>
+        <button type="button" class="op" data-value="*" aria-label="Multiplicar">×</button>
+
+        <button type="button" data-value="4">4</button>
+        <button type="button" data-value="5">5</button>
+        <button type="button" data-value="6">6</button>
+        <button type="button" class="op" data-value="-" aria-label="Restar">−</button>
+
+        <button type="button" data-value="1">1</button>
+        <button type="button" data-value="2">2</button>
+        <button type="button" data-value="3">3</button>
+        <button type="button" class="op" data-value="+" aria-label="Sumar">+</button>
+
+        <button type="button" data-action="negate" aria-label="Cambiar signo">±</button>
+        <button type="button" data-value="0">0</button>
+        <button type="button" data-value=".">.</button>
+        <button type="button" class="equal" data-action="equals" aria-label="Calcular">=</button>
+      </div>
+    </section>
+
+    <!-- ================= MATRICES ================= -->
+    <section class="card" aria-labelledby="matrix-title">
+      <h2 id="matrix-title">Operaciones con matrices</h2>
+
+      <label for="matrix-size">Tamaño:</label>
+      <select id="matrix-size">
+        <option value="2">2x2</option>
+        <option value="3">3x3</option>
+      </select>
+
+      <fieldset>
+        <legend>Matriz A</legend>
+        <div id="matrixA" class="matrix"></div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Matriz B</legend>
+        <div id="matrixB" class="matrix"></div>
+      </fieldset>
+
+      <div class="row">
+        <button type="button" data-matrix-op="sum">A + B</button>
+        <button type="button" data-matrix-op="sub">A − B</button>
+        <button type="button" data-matrix-op="mul">A × B</button>
+        <button type="button" data-matrix-op="det" aria-label="Determinante de A">det(A)</button>
+        <button type="button" data-matrix-op="inv" aria-label="Inversa de A">A⁻¹</button>
+        <button type="button" data-matrix-op="trans" aria-label="Transpuesta de A">Aᵀ</button>
+      </div>
+
+      <h3>Resultado</h3>
+      <div id="matrix-result" class="result-box" role="status" aria-live="polite"></div>
+    </section>
+
+    <!-- ================= HISTORIAL ================= -->
+    <section class="card history" aria-labelledby="history-title">
+      <div class="row between">
+        <h2 id="history-title">Historial</h2>
+        <button type="button" id="clear-history" class="link">Borrar historial</button>
+      </div>
+      <ul id="history-list"></ul>
+    </section>
+
+  </main>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

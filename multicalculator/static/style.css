@@ -1,0 +1,194 @@
+:root {
+  --bg: #eef2f4;
+  --card: #ffffff;
+  --ink: #17262e;
+  --muted: #5d6f78;
+  --line: #d3dde2;
+  --key: #f2f6f8;
+  --op: #d9ecf2;
+  --accent: #0b6e82;
+  --accent-ink: #ffffff;
+  --error: #b3261e;
+  --radius: 10px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f1a1f;
+    --card: #17262e;
+    --ink: #e8f0f3;
+    --muted: #9db0b8;
+    --line: #2b404a;
+    --key: #1f323b;
+    --op: #234a56;
+    --accent: #4cc3d9;
+    --accent-ink: #072229;
+    --error: #ff8a80;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.5;
+}
+
+.layout {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 3rem;
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  align-items: start;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+}
+
+.history { grid-column: 1 / -1; }
+
+h1, h2 { margin: 0 0 1rem; font-size: 1.35rem; }
+h3 { margin: 1rem 0 .4rem; font-size: 1rem; color: var(--muted); font-weight: 600; }
+
+button, select, input { font: inherit; color: inherit; }
+
+button:focus-visible, select:focus-visible, input:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Calculadora */
+.display {
+  display: block;
+  min-height: 3.5rem;
+  padding: .7rem .9rem;
+  margin-bottom: .9rem;
+  text-align: right;
+  font-size: 1.7rem;
+  font-variant-numeric: tabular-nums;
+  word-break: break-all;
+  background: var(--key);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+.display.error { color: var(--error); font-size: 1.05rem; }
+
+.keys {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: .5rem;
+}
+.keys button {
+  padding: .85rem 0;
+  font-size: 1.15rem;
+  background: var(--key);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+.keys button:hover { border-color: var(--accent); }
+.keys .op { background: var(--op); }
+.keys .equal { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.keys .wide { grid-column: span 2; font-size: 1rem; }
+
+/* Matrices */
+select {
+  padding: .35rem .6rem;
+  margin-left: .4rem;
+  background: var(--key);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+}
+
+.matrix { display: grid; gap: .4rem; max-width: 280px; }
+.matrix input {
+  width: 100%;
+  padding: .45rem;
+  text-align: center;
+  background: var(--key);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+}
+
+.row { display: flex; gap: .5rem; flex-wrap: wrap; margin-top: 1rem; }
+.row.between { justify-content: space-between; align-items: baseline; margin: 0; }
+.row.between h2 { margin: 0 0 .75rem; }
+.row button {
+  padding: .55rem 1rem;
+  background: var(--accent);
+  color: var(--accent-ink);
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.row.between .link { background: none; color: var(--accent); padding: 0; }
+
+pre,
+.result-box {
+  margin: 0;
+  padding: .8rem;
+  min-height: 3rem;
+  overflow-x: auto;
+  background: var(--key);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  font-variant-numeric: tabular-nums;
+}
+pre.error,
+.result-box.error { color: var(--error); }
+
+/* Historial */
+.link {
+  background: none;
+  border: 0;
+  text-decoration: underline;
+  cursor: pointer;
+}
+#history-list { list-style: none; margin: 0; padding: 0; }
+#history-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: .55rem 0;
+  border-top: 1px solid var(--line);
+  font-variant-numeric: tabular-nums;
+}
+#history-list li:first-child { border-top: 0; }
+#history-list .meta { color: var(--muted); font-size: .85rem; white-space: nowrap; }
+#history-list .empty { color: var(--muted); }
+#history-list code { word-break: break-all; }
+
+/* Matrices: fieldset/legend y resultado en tabla */
+fieldset { border: 0; margin: 1rem 0 0; padding: 0; min-width: 0; }
+legend {
+  padding: 0;
+  margin-bottom: .4rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+.result-table { border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.result-table td {
+  padding: .3rem .9rem;
+  text-align: right;
+  border: 1px solid var(--line);
+}
+
+/* Respuesta táctil al pulsar */
+.keys button:active { transform: translateY(1px); }
+.row button:hover { filter: brightness(1.1); }
+.row button:active { transform: translateY(1px); }
+.row.between .link:hover { filter: none; text-decoration-thickness: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
